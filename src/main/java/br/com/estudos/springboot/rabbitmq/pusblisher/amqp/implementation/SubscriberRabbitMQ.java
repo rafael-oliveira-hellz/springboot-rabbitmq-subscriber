@@ -14,10 +14,10 @@ public class SubscriberRabbitMQ implements AmqpSubscriber<Message> {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Value("${spring.rabbitmq.request.exchange.subscriber}")
+    @Value("${spring.rabbitmq.exchange.subscriber}")
     private String exchange;
 
-    @Value("${spring.rabbitmq.request.routing-key.subscriber}")
+    @Value("${spring.rabbitmq.routing-key.subscriber}")
     private String queue;
 
     @Override

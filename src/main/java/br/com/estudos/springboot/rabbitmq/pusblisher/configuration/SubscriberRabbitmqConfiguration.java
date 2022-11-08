@@ -13,13 +13,13 @@ import java.util.Map;
 
 @Configuration
 public class SubscriberRabbitmqConfiguration {
-    @Value("${spring.rabbitmq.request.routing-key.subscriber}")
+    @Value("${spring.rabbitmq.routing-key.subscriber}")
     private String queueName;
 
-    @Value("${spring.rabbitmq.request.exchange.subscriber}")
+    @Value("${spring.rabbitmq.exchange.subscriber}")
     private String exchangeName;
 
-    @Value("${spring.rabbitmq.request.deadletter.subscriber}")
+    @Value("${spring.rabbitmq.deadletter.subscriber}")
     private String deadLetterExchangeName;
 
     @Bean

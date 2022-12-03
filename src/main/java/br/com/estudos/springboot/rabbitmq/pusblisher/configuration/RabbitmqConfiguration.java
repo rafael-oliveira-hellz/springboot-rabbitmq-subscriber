@@ -19,7 +19,7 @@ public class RabbitmqConfiguration {
     private ConnectionFactory connectionFactory;
 
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+    SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(jackson2JsonMessageConverter());
@@ -27,7 +27,7 @@ public class RabbitmqConfiguration {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate() {
+    RabbitTemplate rabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
         return rabbitTemplate;

@@ -1,7 +1,7 @@
 package br.com.estudos.springboot.rabbitmq.pusblisher.service;
 
-import br.com.estudos.springboot.rabbitmq.pusblisher.dto.Message;
+import br.com.estudos.springboot.rabbitmq.pusblisher.dto.MessageQueue;
 
 public interface AmqpService {
-    void sendToConsumer(Message message);
+    void sendToConsumer(MessageQueue message);
 }

@@ -1,0 +1,2 @@
+VHOST: /
+QUEUE: dl.subscriber.springboot-rabbitmq-class

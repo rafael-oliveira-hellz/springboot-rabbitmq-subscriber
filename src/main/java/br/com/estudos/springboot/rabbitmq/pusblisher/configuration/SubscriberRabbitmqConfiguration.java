@@ -1,9 +1,6 @@
 package br.com.estudos.springboot.rabbitmq.pusblisher.configuration;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,40 +11,56 @@ import java.util.Map;
 @Configuration
 public class SubscriberRabbitmqConfiguration {
     @Value("${spring.rabbitmq.routing-key.subscriber}")
-    private String queueName;
+    private String routingKey;
 
     @Value("${spring.rabbitmq.exchange.subscriber}")
-    private String exchangeName;
+    private String exchange;
 
-    @Value("${spring.rabbitmq.deadletter.subscriber}")
-    private String deadLetterExchangeName;
+    @Value("${spring.rabbitmq.dead-letter.subscriber}")
+    private String deadLetter;
+
+    @Value("${spring.rabbitmq.parking-lot.subscriber}")
+    private String parkingLot;
 
     @Bean
     DirectExchange exchange() {
-        return new DirectExchange(exchangeName);
-    }
-
-    @Bean
-    Queue deadletter() {
-        return new Queue(deadLetterExchangeName);
+        return new DirectExchange(exchange);
     }
 
     @Bean
     Queue queue() {
-        Map<String, Object> args = new HashMap<>();
-        args.put("x-dead-letter-exchange", exchangeName);
-        args.put("x-dead-letter-routing-key", deadLetterExchangeName);
-
-        return new Queue(queueName, true, false, false, args);
+        return QueueBuilder.durable(routingKey)
+                .deadLetterExchange(exchange)
+                .deadLetterRoutingKey(deadLetter)
+                .build();
     }
 
     @Bean
-    public Binding bindingQueue() {
-        return BindingBuilder.bind(queue()).to(exchange()).with(queueName);
+    Queue deadletter() {
+        return QueueBuilder.durable(deadLetter)
+                .deadLetterExchange(exchange)
+                .deadLetterRoutingKey(routingKey)
+                .build();
     }
 
     @Bean
-    public Binding bindingDeadletter() {
-        return BindingBuilder.bind(deadletter()).to(exchange()).with(deadLetterExchangeName);
+    Queue parkingLot() {
+        return new Queue(parkingLot);
+    }
+
+
+    @Bean
+    Binding bindingQueue() {
+        return BindingBuilder.bind(queue()).to(exchange()).with(routingKey);
+    }
+
+    @Bean
+    Binding bindingDeadletter() {
+        return BindingBuilder.bind(deadletter()).to(exchange()).with(deadLetter);
+    }
+
+    @Bean
+    Binding bindingParkingLot() {
+        return BindingBuilder.bind(parkingLot()).to(exchange()).with(parkingLot);
     }
 }

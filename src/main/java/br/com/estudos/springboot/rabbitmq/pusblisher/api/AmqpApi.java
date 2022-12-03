@@ -1,6 +1,6 @@
 package br.com.estudos.springboot.rabbitmq.pusblisher.api;
 
-import br.com.estudos.springboot.rabbitmq.pusblisher.dto.Message;
+import br.com.estudos.springboot.rabbitmq.pusblisher.dto.MessageQueue;
 import br.com.estudos.springboot.rabbitmq.pusblisher.service.AmqpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ public class AmqpApi {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/send")
-    public void sendToConsumer(@RequestBody Message message) {
+    public void sendToConsumer(@RequestBody MessageQueue message) {
         service.sendToConsumer(message);
         System.out.println("Message sent to consumer");
     }

@@ -1,9 +1,9 @@
 package br.com.estudos.springboot.rabbitmq.pusblisher.dto;
 
-public class Message {
+public class MessageQueue {
     private String message;
 
-    public Message() {
+    public MessageQueue() {
     }
 
     public String getMessage() {

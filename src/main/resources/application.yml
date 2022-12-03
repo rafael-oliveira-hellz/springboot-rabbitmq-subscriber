@@ -10,7 +10,7 @@ spring:
       subscriber: ex.subscriber.springboot-rabbitmq-class
     routing-key:
       subscriber: rk.subscriber.springboot-rabbitmq-class
-    deadletter:
+    dead-letter:
       subscriber: dl.subscriber.springboot-rabbitmq-class
     parking-lot:
       subscriber: pl.subscriber.springboot-rabbitmq-class
